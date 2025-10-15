@@ -1,0 +1,17 @@
+path: "D:/Documents/Projects/Python/AIR/course-work-1/Office_Object_detection/dataset"
+
+train: "train/images"
+
+val: "valid/images"
+
+test: "test/images"
+
+nc: 7
+names:
+  0: Mug
+  1: Chair
+  2: Book
+  3: Computer
+  4: Computer mouse
+  5: Pen
+  6: Computer keyboard
