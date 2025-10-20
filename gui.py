@@ -14,26 +14,41 @@ class GUI:
 
         #header label
         header = Label(root, text="Office Object Detection GUI", fg="black", bg="white")
+        header.pack(side="top")
 
         #window frame for image and video display
         self.image_label = Label(root)
         self.image_label.pack(pady=10)
-
         self.result_label = Label(root, text="", font=("Helvetica", 20))
         self.result_label.pack(pady=10)
 
         # Buttons for the different commands
         Button(root, text="Upload Image", command=self.upload_image).pack(pady=5)
-        Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
-        Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)
+        """Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
+        Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)"""
+
+       #cv2 video capture tate
+        self.cap = None
+        self.running = False
     
     def upload_image(self):
         #open file dialog
         filename = filedialog.askopenfilename(filetypes=[("Image Files", "*.png *.jpg *.jpeg")])
         if filename:
-            self.upload_image(filename) #dislay selected image
-    
-    def update_video(self):
+            self.display_image(filename) #dislay selected image
+
+    def display_image(self, path):
+        #loads and displays selected image
+        img = Image.open(path).resize((1200, 800))
+        imgtk = ImageTk.PhotoImage(img)
+        self.image_label.imgtk = imgtk
+        self.image_label.configure(image=imgtk)
+
+    #def start_video_stream(self): [placehollder]
+
+    #def stop_video_stream(self): [placeholder]
+
+    """def update_video(self):
         #updates the frames for real-time camera feed
         if self.running and self.cap:
             ret, frame = self.cap.read()
@@ -41,7 +56,7 @@ class GUI:
                 #saves the frame temporarily for classification
                 temp_path = "frame.jpg"
                 cv2.imwrite(temp_path, frame)
-    
+                
                 rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 img = Image.fromarray(rgb_frame).resize((1200, 1200))
                 imgtk = ImageTk.PhotoImage(image=img)
@@ -49,6 +64,14 @@ class GUI:
                 self.image_label.imgtk = imgtk
                 self.image_label.configure(image=imgtk)
     
-            self.root.after(50, self.update_video)  #sets time between frames to be every 50 ms
-
-
+            self.root.after(50, self.update_video)  #sets time between frames to be every 50 ms"""
+    
+#launch the gui
+def launch_gui():
+    root = tk.Tk()
+    app = GUI(root)
+    root.mainloop()
+    
+# Entry point
+if __name__ == "__main__":
+    launch_gui()
