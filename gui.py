@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog, Label, Button
 from PIL import Image, ImageTk
 import cv2
-import os
 
 
 class GUI:
@@ -84,12 +83,4 @@ class GUI:
         self.stop_video_stream()
         self.image_label.configure(image='')
 
-# launch the gui
-def launch_gui():
-    root = tk.Tk()
-    app = GUI(root)
-    root.mainloop()
 
-# Entry point
-if __name__ == "__main__":
-    launch_gui()
