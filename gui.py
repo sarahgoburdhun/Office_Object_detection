@@ -10,7 +10,7 @@ class GUI:
         # initilising main window
         self.root = root
         self.root.title("Office Object Detection")  # title
-        self.root.geometry("400x400+700+300")  # set size and location
+        self.root.geometry("500x300+700+300")  # set size and location
 
         # header label
         header = Label(root, text="Welcome to the Office Object Detection Model", fg="black",  font=("Helvetica", 15))
