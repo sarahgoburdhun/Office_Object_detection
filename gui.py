@@ -13,7 +13,7 @@ class GUI:
         self.root.geometry("400x400+700+300")  # set size and location
 
         # header label
-        header = Label(root, text="Welcome to the Office Object Detection Mddel!", fg="black", bg="white")
+        header = Label(root, text="Welcome to the Office Object Detection Model", fg="black",  font=("Helvetica", 15))
         header.pack(side="top")
 
         # window frame for image and video display
