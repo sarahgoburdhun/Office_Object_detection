@@ -14,19 +14,23 @@ class GUI:
 
         # header label
         header = Label(root, text="Welcome to the Office Object Detection Model", fg="black",  font=("Helvetica", 15))
-        header.pack(side="top")
 
-        # window frame for image and video display
-        self.image_label = Label(root)
-        self.image_label.pack(pady=10)
-        self.result_label = Label(root, text="", font=("Helvetica", 20))
-        self.result_label.pack(pady=10)
 
         # Buttons for the different commands
-        Button(root, text="Upload Image", command=self.upload_image).pack(pady=5)
-        Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
-        Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)
-        Button(root, text="Back", command=self.go_back).pack(pady=5)
+        upload_img_btn = Button(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15))
+
+        live_stream_btn = Button(root, text="Live Detection", command=self.upload_image, font=("Helvetica", 15))
+
+        quit  = Button(root, text="Quit", height=2, width=8, font=("Helvetica", 15))
+        # Button(root, text="Upload Image", command=self.upload_image).pack(pady=5)
+        # Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
+        # Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)
+        # Button(root, text="Back", command=self.go_back).pack(pady=5)
+
+        header.place(x=50, y=50)
+        upload_img_btn.place(x=50, y=150)
+        live_stream_btn.place(x=320, y=150)
+        quit.place(x=200, y=200)
 
         # cv2 video capture state
         self.cap = None
