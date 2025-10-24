@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import filedialog, Label, Button
+from turtle import bgcolor
 from PIL import Image, ImageTk
 import cv2
+from .button import GUIButton
 
 
 class GUI:
@@ -17,20 +19,30 @@ class GUI:
 
 
         # Buttons for the different commands
-        upload_img_btn = Button(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15))
+        upload_img_btn = GUIButton(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15), x=50, y=150)
+        upload_img_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
+                                        fgcolour="white", hoverBG="green3", hoverFG="white")
+        
+        live_stream_btn = GUIButton(root, text="Live Detection", command=self.start_video_stream, font=("Helvetica", 15), x=320, y=150)
+        live_stream_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
+                                        fgcolour="white", hoverBG="green3", hoverFG="white")
 
-        live_stream_btn = Button(root, text="Live Detection", command=self.upload_image, font=("Helvetica", 15))
+      
 
-        quit  = Button(root, text="Quit", height=2, width=8, font=("Helvetica", 15))
+        quit_btn = GUIButton(root, text="Quit", command=self.update_video, font=("Helvetica", 15), x=200, y=200)
+
+        quit_btn.config_colours( activeBG="firebrick4", activeFG="white", bgcolour="firebrick3", 
+                                        fgcolour="white", hoverBG="red", hoverFG="white")
+        
+        quit_btn.set_dimensions(height=2, width=8)
+
         # Button(root, text="Upload Image", command=self.upload_image).pack(pady=5)
         # Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
         # Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)
         # Button(root, text="Back", command=self.go_back).pack(pady=5)
 
         header.place(x=50, y=50)
-        upload_img_btn.place(x=50, y=150)
-        live_stream_btn.place(x=320, y=150)
-        quit.place(x=200, y=200)
+        # live_stream_btn.place(x=320, y=150)
 
         # cv2 video capture state
         self.cap = None
