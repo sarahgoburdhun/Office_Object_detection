@@ -1,5 +1,5 @@
 from tkinter import Tk
-from gui import GUI
+from modules.user_interface.gui import GUI
 
 # launch the gui
 def launch_gui():
