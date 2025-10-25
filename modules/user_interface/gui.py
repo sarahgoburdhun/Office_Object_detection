@@ -9,7 +9,7 @@ from .button import GUIButton
 class GUI:
     def __init__(self, root):
 
-        # initilising main window
+        # initialising main window
         self.root = root
         self.root.title("Office Object Detection")  # title
         self.root.geometry("500x300+700+300")  # set size and location
@@ -36,6 +36,9 @@ class GUI:
         
         quit_btn.set_dimensions(height=2, width=8)
 
+        self.image_label = tk.Label(self.root)
+        self.image_label.place(x=50, y=80)
+
         header.place(x=50, y=50)
         # live_stream_btn.place(x=320, y=150)
 
@@ -50,11 +53,18 @@ class GUI:
             self.display_image(filename)  # display selected image
 
     def display_image(self, path):
-        # loads and displays selected image
-        img = Image.open(path).resize((500, 500))
+        # create a window
+        new_window = tk.Toplevel(self.root)
+        new_window.title("Uploaded Image")
+        new_window.geometry("600x600+750+300") 
+        # load and resize the image
+        img = Image.open(path).resize((625, 625))
         imgtk = ImageTk.PhotoImage(img)
-        self.image_label.imgtk = imgtk
-        self.image_label.configure(image=imgtk)
+
+        # create a label inside the  window
+        image_label = tk.Label(new_window, image=imgtk)
+        image_label.imgtk = imgtk
+        image_label.pack(padx=10, pady=10)
 
     def start_video_stream(self):
         # start webcam stream
