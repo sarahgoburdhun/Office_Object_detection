@@ -60,5 +60,5 @@ class GUIButton:
         self.button.config(height= self.height, width= self.width)
 
     # void function
-    def void_function():
+    def void_function(self):
         pass
