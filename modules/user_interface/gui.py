@@ -22,24 +22,19 @@ class GUI:
         upload_img_btn = GUIButton(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15), x=50, y=150)
         upload_img_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
                                         fgcolour="white", hoverBG="green3", hoverFG="white")
-        
+
         live_stream_btn = GUIButton(root, text="Live Detection", command=self.start_video_stream, font=("Helvetica", 15), x=320, y=150)
         live_stream_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
                                         fgcolour="white", hoverBG="green3", hoverFG="white")
 
       
 
-        quit_btn = GUIButton(root, text="Quit", command=self.update_video, font=("Helvetica", 15), x=200, y=200)
+        quit_btn = GUIButton(root, text="Quit", command=self.quit_app, font=("Helvetica", 15), x=200, y=200)
 
         quit_btn.config_colours( activeBG="firebrick4", activeFG="white", bgcolour="firebrick3", 
                                         fgcolour="white", hoverBG="red", hoverFG="white")
         
         quit_btn.set_dimensions(height=2, width=8)
-
-        # Button(root, text="Upload Image", command=self.upload_image).pack(pady=5)
-        # Button(root, text="Start Live Video", command=self.start_video_stream).pack(pady=5)
-        # Button(root, text="Stop Video", command=self.stop_video_stream).pack(pady=5)
-        # Button(root, text="Back", command=self.go_back).pack(pady=5)
 
         header.place(x=50, y=50)
         # live_stream_btn.place(x=320, y=150)
@@ -94,9 +89,6 @@ class GUI:
 
             self.root.after(50, self.update_video)  # sets time between frames to be every 50 ms
 
-    def go_back(self):
-        #stop webcam stream
-        self.stop_video_stream()
-        self.image_label.configure(image='')
-
-
+    def quit_app(self):
+        self.stop_video_stream()  # video stream if it's onw
+        self.root.quit()  # exit gui
