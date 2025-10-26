@@ -27,14 +27,20 @@ class GUI:
         live_stream_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
                                         fgcolour="white", hoverBG="green3", hoverFG="white")
 
-      
-
         quit_btn = GUIButton(root, text="Quit", command=self.quit_app, font=("Helvetica", 15), x=200, y=200)
 
         quit_btn.config_colours( activeBG="firebrick4", activeFG="white", bgcolour="firebrick3", 
                                         fgcolour="white", hoverBG="red", hoverFG="white")
         
         quit_btn.set_dimensions(height=2, width=8)
+
+        back_btn = GUIButton(root, text="Back",command=self.go_back,
+                             font=("Helvetica", 15), x=200, y=100)
+
+        back_btn.config_colours(activeBG="gray30", activeFG="white", bgcolour="gray60",
+                                fgcolour="white", hoverBG="gray40", hoverFG="white")
+        
+        back_btn.set_dimensions(height=2, width=8)
 
         self.image_label = tk.Label(self.root)
         self.image_label.place(x=50, y=80)
@@ -54,15 +60,15 @@ class GUI:
 
     def display_image(self, path):
         # create a window
-        new_window = tk.Toplevel(self.root)
-        new_window.title("Uploaded Image")
-        new_window.geometry("600x600+750+300") 
+        self.image_window = tk.Toplevel(self.root)
+        self.image_window.title("Uploaded Image")
+        self.image_window.geometry("600x600+750+300")
         # load and resize the image
         img = Image.open(path).resize((625, 625))
         imgtk = ImageTk.PhotoImage(img)
 
         # create a label inside the  window
-        image_label = tk.Label(new_window, image=imgtk)
+        image_label = tk.Label(self.image_window, image=imgtk)
         image_label.imgtk = imgtk
         image_label.pack(padx=10, pady=10)
 
@@ -107,3 +113,10 @@ class GUI:
     def quit_app(self):
         self.stop_video_stream()  # video stream if it's onw
         self.root.quit()  # exit gui
+
+    def go_back(self):
+        # closes any pop-up windows and resets todefault state
+        self.stop_video_stream()
+        self.image_label.config(image='')
+        if hasattr(self, "image_window") and self.image_window.winfo_exists():
+            self.image_window.destroy()
