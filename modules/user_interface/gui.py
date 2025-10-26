@@ -67,8 +67,16 @@ class GUI:
         image_label.pack(padx=10, pady=10)
 
     def start_video_stream(self):
+         if not self.running:
+            # create a new window for the webcam feed
+            self.video_window = tk.Toplevel(self.root)
+            self.video_window.title("Live Camera Feed")
+            self.video_window.geometry("600x600+750+300") 
+
+            # label inside the new window to hold frames
+            self.video_label = tk.Label(self.video_window)
+            self.video_label.pack(padx=10, pady=10)
         # start webcam stream
-        if not self.running:
             self.cap = cv2.VideoCapture(0)
             self.running = True
             self.update_video()
@@ -79,25 +87,22 @@ class GUI:
         if self.cap:
             self.cap.release()
             self.cap = None
-            self.image_label.config(image='')
+        if hasattr(self, "video_window") and self.video_window.winfo_exists():
+            self.video_window.destroy()
 
     def update_video(self):
     # updates the frames for real-time camera feed
         if self.running and self.cap:
             ret, frame = self.cap.read()
             if ret:
-                # saves the frame temporarily for classification
-                temp_path = "frame.jpg"
-                cv2.imwrite(temp_path, frame)
-
                 rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                img = Image.fromarray(rgb_frame).resize((800, 400))
+                img = Image.fromarray(rgb_frame).resize((625, 625))
                 imgtk = ImageTk.PhotoImage(image=img)
                 # updates with new frame
-                self.image_label.imgtk = imgtk
-                self.image_label.configure(image=imgtk)
+                self.video_label.imgtk = imgtk
+                self.video_label.configure(image=imgtk)
 
-            self.root.after(50, self.update_video)  # sets time between frames to be every 50 ms
+            self.video_window.after(50, self.update_video)  # sets time between frames to be every 50 ms
 
     def quit_app(self):
         self.stop_video_stream()  # video stream if it's onw
