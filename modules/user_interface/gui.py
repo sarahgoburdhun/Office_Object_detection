@@ -47,7 +47,6 @@ class GUI:
         self.image_label.place(x=50, y=80)
 
         header.place(x=50, y=50)
-        # live_stream_btn.place(x=320, y=150)
 
         # cv2 video capture state
         self.cap = None
@@ -74,17 +73,14 @@ class GUI:
         img_frame = tk.Frame(self.image_window)
         img_frame.pack(expand=True, fill="both")
         # add label inside the frame to dusplay the image
-        self.image_label = tk.Label(img_frame)
-        self.image_label.pack(expand=True, fill="both")
+        self.uploaded_image_label = tk.Label(img_frame)
+        self.uploaded_image_label.pack(expand=True, fill="both")
 
         # back button frame at bottom of the window
         btn_frame = tk.Frame(self.image_window)
         btn_frame.pack(fill="x")
 
-        back_btn = tk.Button(btn_frame,
-                             text="Back",
-                             font=("Helvetica", 12),
-                             command=self.image_window.destroy)
+        back_btn = tk.Button(btn_frame, text="Back", font=("Helvetica", 12), command=self.image_window.destroy)
         back_btn.pack(pady=5)
 
         #resizes the image when the window size change
@@ -96,8 +92,8 @@ class GUI:
 
                 resized = self.original_img.resize(new_size, Image.LANCZOS)
                 imgtk = ImageTk.PhotoImage(resized)
-                self.image_label.imgtk = imgtk
-                self.image_label.configure(image=imgtk)
+                self.uploaded_image_label.imgtk = imgtk
+                self.uploaded_image_label.configure(image=imgtk)
         self.image_window.bind("<Configure>", resize_image)
 
     def start_video_stream(self):
