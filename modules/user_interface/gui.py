@@ -15,31 +15,32 @@ class GUI:
         self.root.geometry("500x300+700+300")  # set size and location
 
         # header label
-        header = Label(root, text="Welcome to the Office Object Detection Model", fg="black",  font=("Helvetica", 15))
-
+        header = Label(root, text="Welcome to the Office Object Detection Model", fg="black", font=("Helvetica", 15))
 
         # Buttons for the different commands
-        upload_img_btn = GUIButton(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15), x=50, y=150)
-        upload_img_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
-                                        fgcolour="white", hoverBG="green3", hoverFG="white")
+        upload_img_btn = GUIButton(root, text="Upload Image", command=self.upload_image, font=("Helvetica", 15), x=50,
+                                   y=150)
+        upload_img_btn.config_colours(activeBG="green4", activeFG="white", bgcolour="SpringGreen3",
+                                      fgcolour="white", hoverBG="green3", hoverFG="white")
 
-        live_stream_btn = GUIButton(root, text="Live Detection", command=self.start_video_stream, font=("Helvetica", 15), x=320, y=150)
-        live_stream_btn.config_colours( activeBG="green4", activeFG="white", bgcolour="SpringGreen3", 
-                                        fgcolour="white", hoverBG="green3", hoverFG="white")
+        live_stream_btn = GUIButton(root, text="Live Detection", command=self.start_video_stream,
+                                    font=("Helvetica", 15), x=320, y=150)
+        live_stream_btn.config_colours(activeBG="green4", activeFG="white", bgcolour="SpringGreen3",
+                                       fgcolour="white", hoverBG="green3", hoverFG="white")
 
         quit_btn = GUIButton(root, text="Quit", command=self.quit_app, font=("Helvetica", 15), x=200, y=200)
 
-        quit_btn.config_colours( activeBG="firebrick4", activeFG="white", bgcolour="firebrick3", 
-                                        fgcolour="white", hoverBG="red", hoverFG="white")
-        
+        quit_btn.config_colours(activeBG="firebrick4", activeFG="white", bgcolour="firebrick3",
+                                fgcolour="white", hoverBG="red", hoverFG="white")
+
         quit_btn.set_dimensions(height=2, width=8)
 
-        back_btn = GUIButton(root, text="Back",command=self.go_back,
+        back_btn = GUIButton(root, text="Back", command=self.go_back,
                              font=("Helvetica", 15), x=200, y=100)
 
         back_btn.config_colours(activeBG="gray30", activeFG="white", bgcolour="gray60",
                                 fgcolour="white", hoverBG="gray40", hoverFG="white")
-        
+
         back_btn.set_dimensions(height=2, width=8)
 
         self.image_label = tk.Label(self.root)
@@ -57,7 +58,6 @@ class GUI:
         filename = filedialog.askopenfilename(filetypes=[("Image Files", "*.png *.jpg *.jpeg")])
         if filename:
             self.display_image(filename)  # display selected image
-
 
     #method to display uploaded image
     def display_image(self, path):
@@ -87,17 +87,30 @@ class GUI:
                              command=self.image_window.destroy)
         back_btn.pack(pady=5)
 
+        #resizes the image when the window size change
+        def resize_image(event):
+            if event.width > 50 and event.height > 50:  # ignore tiny resizes
+                img_w, img_h = self.original_img.size
+                ratio = min(event.width / img_w, event.height / img_h)
+                new_size = (int(img_w * ratio), int(img_h * ratio))
+
+                resized = self.original_img.resize(new_size, Image.LANCZOS)
+                imgtk = ImageTk.PhotoImage(resized)
+                self.image_label.imgtk = imgtk
+                self.image_label.configure(image=imgtk)
+        self.image_window.bind("<Configure>", resize_image)
+
     def start_video_stream(self):
-         if not self.running:
+        if not self.running:
             # create a new window for the webcam feed
             self.video_window = tk.Toplevel(self.root)
             self.video_window.title("Live Camera Feed")
-            self.video_window.geometry("600x600+750+300") 
+            self.video_window.geometry("600x600+750+300")
 
             # label inside the new window to hold frames
             self.video_label = tk.Label(self.video_window)
             self.video_label.pack(padx=10, pady=10)
-        # start webcam stream
+            # start webcam stream
             self.cap = cv2.VideoCapture(0)
             self.running = True
             self.update_video()
@@ -112,7 +125,7 @@ class GUI:
             self.video_window.destroy()
 
     def update_video(self):
-    # updates the frames for real-time camera feed
+        # updates the frames for real-time camera feed
         if self.running and self.cap:
             ret, frame = self.cap.read()
             if ret:
