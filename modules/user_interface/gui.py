@@ -58,19 +58,34 @@ class GUI:
         if filename:
             self.display_image(filename)  # display selected image
 
+
+    #method to display uploaded image
     def display_image(self, path):
-        # create a window
+        # create new window to show uploaded image
         self.image_window = tk.Toplevel(self.root)
         self.image_window.title("Uploaded Image")
-        self.image_window.geometry("600x600+750+300")
-        # load and resize the image
-        img = Image.open(path).resize((625, 625))
-        imgtk = ImageTk.PhotoImage(img)
+        self.image_window.geometry("800x600")
+        self.image_window.resizable(True, True)
 
-        # create a label inside the  window
-        image_label = tk.Label(self.image_window, image=imgtk)
-        image_label.imgtk = imgtk
-        image_label.pack(padx=10, pady=10)
+        # loads original image
+        self.original_img = Image.open(path)
+
+        # frame for the image
+        img_frame = tk.Frame(self.image_window)
+        img_frame.pack(expand=True, fill="both")
+        # add label inside the frame to dusplay the image
+        self.image_label = tk.Label(img_frame)
+        self.image_label.pack(expand=True, fill="both")
+
+        # back button frame at bottom of the window
+        btn_frame = tk.Frame(self.image_window)
+        btn_frame.pack(fill="x")
+
+        back_btn = tk.Button(btn_frame,
+                             text="Back",
+                             font=("Helvetica", 12),
+                             command=self.image_window.destroy)
+        back_btn.pack(pady=5)
 
     def start_video_stream(self):
          if not self.running:
