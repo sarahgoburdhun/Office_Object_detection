@@ -4,6 +4,7 @@ from turtle import bgcolor
 from PIL import Image, ImageTk
 import cv2
 from .button import GUIButton
+from ..object_detection.detector import Detector
 
 
 class GUI:
@@ -13,6 +14,7 @@ class GUI:
         self.root = root
         self.root.title("Office Object Detection")  # title
         self.root.geometry("500x300+700+300")  # set size and location
+        self.detector = Detector()
 
         # header label
         header = Label(root, text="Welcome to the Office Object Detection Model", fg="black", font=("Helvetica", 15))
@@ -91,6 +93,12 @@ class GUI:
                 new_size = (int(img_w * ratio), int(img_h * ratio))
 
                 resized = self.original_img.resize(new_size, Image.LANCZOS)
+
+                # img = self.detector.predict(resized)
+                # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # img = Image.fromarray(img)
+                # imgtk = ImageTk.PhotoImage(img)
+
                 imgtk = ImageTk.PhotoImage(resized)
                 self.uploaded_image_label.imgtk = imgtk
                 self.uploaded_image_label.configure(image=imgtk)
