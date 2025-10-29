@@ -17,7 +17,15 @@ pip install -r requirements.txt
 ### Step 3: Run the program
 Simply press the play button while on the main.py file or in the terminal, run:
 ```bash
-python mmain.py
+python main.py
 ```
 # Runs and output
-# Trouble shooting
+# Trouble Shooting
+## Problem When Installing Requirements.
+### Possible Solutions
+* Update your python to the 3.13.3 and rerun the pip install
+* If the first point fails, you would have to manually install the following libraries
+    * opencv-python
+    * ultralytics
+    * pillow
+    * Install "[torch v12.9](https://pytorch.org/)" if you would like to train the model on a custom dataset.
